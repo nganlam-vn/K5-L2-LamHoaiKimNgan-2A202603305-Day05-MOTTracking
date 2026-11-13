@@ -18,11 +18,11 @@ Ghi **trước khi vẽ**, mỗi người một dòng.
 
 | Mã | Frame xuất hiện | Frame cuối thấy được | Rẽ / dừng / đổi tốc độ ở frame | Bị che ở frame | Ghi chú |
 |---|---|---|---|---|---|
-| P1 | 0 | 149 | 20–30 (chậm lại), 50 (bước ra), 100–110 (đổi hướng nhẹ sang phải) | 30–59 (che một phần ở 30–42 và 50–59, khuất hẳn ở 43–49) | Người áo len đen đi qua shop Vodafone từ trái qua phải, bị người áo khoác đen (Person 2) che khuất |
-| P2 | 61 | 149 | Di chuyển đều, không đổi hướng đột ngột | 61–70 (bị khung kính / mép cửa shop che một phần khi mới xuất hiện) | Xuất hiện từ frame 61 bên trong cửa hàng Vodafone, đi cùng hướng với P1 |
+| P1 | 0 | 149 | 20–30 (chậm lại), 50 (bước ra), 100–110 (đổi hướng nhẹ sang phải) | 30–59 (che một phần ở 30–42 và 50–59, khuất hẳn ở 43–49) | -|
+| P2 | 61 | 149 | Di chuyển đều, không đổi hướng đột ngột | 61–70 (bị khung kính / mép cửa shop che một phần khi mới xuất hiện) | -|
 | P3 | 0 | 149 | 60–80 (bước đều, tịnh tiến dần lại gần camera) | Không bị che (0 frame occluded/outside) | Đi bộ dọc theo lề đường bên phải, kích thước box tăng dần khi lại gần camera |
 | P4 | 39 | 149 | 49–60 (di chuyển dọc lề phải sát mép khung hình) | 39, 49, 59 (che một phần), 50–58 (khuất mép / ngoài khung hình) | Xuất hiện từ frame 39 ở mép phải màn hình, đi cùng phía với P3 |
-| P5 | 0 | 148 | 100–110 (chậm lại do người khác cắt ngang) | 110–119 (che một phần), 120–139 (khuất hẳn sau người khác) | Người đi bộ ở xa giữa quảng trường, kích thước box nhỏ, bị che khuất đoạn dài cuối video |
+| P5 | 0 | 148 | 100–110 (chậm lại do người khác cắt ngang) | 110–119 (che một phần), 120–139 (khuất hẳn sau người khác) | - |
 
 ## 2. Keyframe và thời gian (CP1, CP4)
 
@@ -41,8 +41,8 @@ Keyframe / 100 frame của cả bài = tổng keyframe ÷ tổng số frame có 
 
 Bạn đặt keyframe nhiều nhất ở người nào? Vì sao (người đó rẽ, dừng, lại gần camera hay bị che)?
 
-- Tôi đặt nhiều keyframe nhất ở người **P4** (21 keyframe, mật độ 20.6 keyframe / 100 frame) và **P3** (16 keyframe).
-- **Lý do:** Đối với P4, người này xuất hiện ở mép ngoài cùng bên phải khung hình từ frame 39, di chuyển lại gần camera với tốc độ bước chân không đều và có đoạn bị che khuất/khuất mép (frame 50). Do chuyển động bước đi và sự thay đổi phối cảnh góc rộng ở mép camera diễn ra nhanh, phép nội suy tuyến tính (Linear Interpolation) dễ bị trễ hoặc lệch IoU nếu khoảng cách keyframe quá thưa. Vì vậy, tôi phải cắm thêm keyframe ở các mốc ngắn (như 39, 40, 49, 50, 59, 60...) để đảm bảo bounding box bám khít sát toàn thân. Với P1, tôi cũng cần 15 keyframe để kiểm soát chặt chẽ các mốc trước, trong và sau đoạn bị che khuất qua cửa hàng Vodafone.
+- Em đặt nhiều keyframe nhất ở người **P4**.
+- **Lý do:** Đối với P4, người này xuất hiện ở mép ngoài cùng bên phải khung hình từ frame 39, di chuyển lại gần camera với tốc độ bước chân không đều và có đoạn bị che khuất/khuất mép (frame 50). Do chuyển động bước đi và sự thay đổi phối cảnh góc rộng ở mép camera diễn ra nhanh, phép nội suy tuyến tính (Linear Interpolation) dễ bị trễ hoặc lệch IoU nếu khoảng cách keyframe quá thưa. Vì vậy, em phải cắm thêm keyframe ở các mốc ngắn (như 39, 40, 49, 50, 59, 60...) để đảm bảo bounding box bám khít sát toàn thân.
 
 ## 3. Đoạn bị che (CP2)
 
@@ -105,31 +105,17 @@ Lỗi nào chỉ lượt 2 (theo cảnh) mới thấy, lượt 1 (theo người)
 Dán phần tóm tắt in ra từ `src/check_submission.py`:
 
 ![result](image.png)
-
-=== File MOT 1.1: LamHoaiKimNgan_mot.zip ===
   Số track ID: 5   |   Tổng số box: 613
   [OK]        Đúng 5 track ID.
 
 1. Nếu được gán lại, bạn sẽ đặt keyframe khác ở đâu? Vì sao?
 
-=== File CVAT for video 1.1: LamHoaiKimNgan_cvat_video.zip ===
-
 2. Có chỗ nào bạn không chắc "cùng ID hay ID mới"? Bạn đã quyết định và ghi chú thế nào?
-
-   ...
-
-=== Tóm tắt ===
-  Lỗi: 0   |   Cảnh báo: 0
-  Đạt. Dán phần tóm tắt này vào báo cáo mục 5.
-```
-
-   ...
-
+Không có, vì đã hỏi lab coach và đã được hướng dẫn
 ## 6. Ba câu kết
 
 1. **Nếu được gán lại, bạn sẽ đặt keyframe khác ở đâu? Vì sao?**
-   - Ở đối tượng **P4** (Track 2), tôi sẽ phân bổ lại khoảng cách giữa các keyframe đồng đều hơn ở nửa sau đoạn đường (frame 70–140), đồng thời tối ưu hóa các keyframe quá sát nhau ở đoạn đầu (39, 40, 49, 50) bằng cách điều chỉnh góc đón và tỷ lệ phóng đại tổng thể thay vì đặt keyframe dày cục bộ. Điều này giúp giảm số lượng keyframe xuống khoảng 14–16 mà vẫn đảm bảo box không bị trôi và giữ chuyển động nội suy mượt mà hơn.
-   - Ở đối tượng **P5**, tôi sẽ bổ sung thêm 1 keyframe trung gian tại frame 102 để định hình box tốt hơn ngay trước khi đối tượng bước vào vùng bị người khác che khuất ở frame 110.
+   - Ở đối tượng **P5**, em sẽ bổ sung thêm 1 keyframe trung gian tại frame 102 để định hình box tốt hơn ngay trước khi đối tượng bước vào vùng bị người khác che khuất ở frame 110.
 
 2. **Có chỗ nào bạn không chắc "cùng ID hay ID mới"? Bạn đã quyết định và ghi chú thế nào?**
    Không có 
